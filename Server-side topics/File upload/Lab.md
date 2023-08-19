@@ -12,7 +12,7 @@
 
 Solution:
 
-After login, I use the upload function to upload a PHP script, whose name is *test.php*. The script is `**<?php echo file_get_contents('/home/carlos/secret'); ?>**`. After upload, I only receive the notice that *The file avatars/test.php has been uploaded.*. I wonder why I fail where no content of the script is returned. As I searched for the solution, I realized that after clicking *Back to My Account*, the upload file had just been completed. And the page will reload again with a new script supplied. The secret is *HLPFIz0HNr4MnAcSRrgNcibNv1q9zrWM*.
+After login, I use the upload function to upload a PHP script, whose name is *test.php*. The script is `<?php echo file_get_contents('/home/carlos/secret'); ?>`. After upload, I only receive the notice that *The file avatars/test.php has been uploaded.*. I wonder why I fail where no content of the script is returned. As I searched for the solution, I realized that after clicking *Back to My Account*, the upload file had just been completed. And the page will reload again with a new script supplied. The secret is *HLPFIz0HNr4MnAcSRrgNcibNv1q9zrWM*.
 
 ### Exploiting flawed validation of file uploads
 
@@ -40,7 +40,7 @@ Solution:
 
 > Web servers often use the *filename* field in *multipart/form-data* requests to determine the name and location where the file should be saved.
 
-If we do the same as the previous lab. The result returned is that our payload is displayed as plain text. This lab uses technical upload files and path traversal. So, initially, I am so stuck because I cannot find where to do a traversal directory. After observing the solution and reading the content again. The *filename* field determines the name of the file. So when we sent *filename="test.php"*, we received *The file avatars/test.php has been uploaded.* File is uploaded to *avatars* folder. And when loading the image, the application gets a path as */files/avatars/test.php* to load the image. When one file is uploaded to *avatars* if it is a script, it will not execute as i said above. We need to upload files to another folder, except *avatars*. So we have payload as `**filename="..%2ftest.php"**`.
+If we do the same as the previous lab. The result returned is that our payload is displayed as plain text. This lab uses technical upload files and path traversal. So, initially, I am so stuck because I cannot find where to do a traversal directory. After observing the solution and reading the content again. The *filename* field determines the name of the file. So when we sent *filename="test.php"*, we received *The file avatars/test.php has been uploaded.* File is uploaded to *avatars* folder. And when loading the image, the application gets a path as */files/avatars/test.php* to load the image. When one file is uploaded to *avatars* if it is a script, it will not execute as i said above. We need to upload files to another folder, except *avatars*. So we have payload as `filename="..%2ftest.php"`.
 
 > We need to encode ../ because applications block requests that contain obvious signs of a directory traversal attack.
 
@@ -75,7 +75,7 @@ It is still uploaded *The file avatars/.htaccess has been uploaded.* but when it
 
 Solution:
 
-When I post a *.php* file. It said *only JPG & PNG files are allowed*. So we only need to modify the file extension to this: `**filename="test.php%00.png"**`. After that, we have an issue where we cannot receive */files/avatars/test.php* normally. We have to borrow other responses with the right extension *png* or *jpg* and modify them to get *secret*. The secret is *9zP58SHF8CNTjsboOlcjj0NwP0jjCKaX*.
+When I post a *.php* file. It said *only JPG & PNG files are allowed*. So we only need to modify the file extension to this: `filename="test.php%00.png"`. After that, we have an issue where we cannot receive */files/avatars/test.php* normally. We have to borrow other responses with the right extension *png* or *jpg* and modify them to get *secret*. The secret is *9zP58SHF8CNTjsboOlcjj0NwP0jjCKaX*.
 
 ### Flawed validation of the file's contents
 
@@ -87,7 +87,7 @@ When I post a *.php* file. It said *only JPG & PNG files are allowed*. So we onl
 
 Solution:
 
-First, I think that we can insert a payload into an image normally by capturing the request sent by Burp Suit, but it fails. As I examine the solution, I realize that we cannot pass payloads to images normally. We need to use the tool *Exiftool*. We need to create a polyglot JPEG file containing malicious code within its metadata. The command to create an image is `**exiftool -Comment="<?php echo 'START ' . file_get_contents('/home/carlos/secret') . ' END'; ?>" test.jpg -o image.php**`. The output is *image.php*
+First, I think that we can insert a payload into an image normally by capturing the request sent by Burp Suit, but it fails. As I examine the solution, I realize that we cannot pass payloads to images normally. We need to use the tool *Exiftool*. We need to create a polyglot JPEG file containing malicious code within its metadata. The command to create an image is `exiftool -Comment="<?php echo 'START ' . file_get_contents('/home/carlos/secret') . ' END'; ?>" test.jpg -o image.php`. The output is *image.php*
 
 > When I checked file type, it said *image.php: JPEG image data, JFIF standard 1.01, resolution (DPI), density 72x72, segment length 16, comment: ```"<?php echo 'START ' . file_get_contents('/home/carlos/secret') . ' END'; ?>"```, progressive, precision 8, 2500x1250, components 3*.
 

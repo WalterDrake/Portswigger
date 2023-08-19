@@ -12,7 +12,7 @@
 
 Solution:
 
-To traversal, we need to take source of image like this **/image?filename=1**, after we have payload as `**/image?filename=../../../etc/passwd**`
+To traversal, we need to take source of image like this **/image?filename=1**, after we have payload as `/image?filename=../../../etc/passwd`
 
 ## Common obstacles to exploiting file path traversal vulnerabilities
 
@@ -24,7 +24,7 @@ To traversal, we need to take source of image like this **/image?filename=1**, a
 
 Solution:
 
-As above we have payload as `**/image?filename=/etc/passwd**`
+As above we have payload as `/image?filename=/etc/passwd`
 
 ### Lab: File path traversal, traversal sequences stripped non-recursively
 
@@ -34,7 +34,7 @@ As above we have payload as `**/image?filename=/etc/passwd**`
 
 Solution:
 
-As above we have payload as `**/image?filename=....//....//....//etc/passwd**`
+As above we have payload as `/image?filename=....//....//....//etc/passwd`
 
 > In this lab, the filter removes *../* from the payload, so *....//....//....//* to *../../../*
 
@@ -46,7 +46,7 @@ As above we have payload as `**/image?filename=....//....//....//etc/passwd**`
 
 Solution:
 
-First, I have payload as `**/image?filename=%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passwd**` but it returned *No such file* after I try to use nested traversal sequences, it still return that. Hmm, i observe the solution and realize that mechanism of filter as blocking input containing path traversal sequences and then performs a URL-decode of the input, them interspersed with each other. So my first payload after decoding firstly, it is removed by application because of blocking input containing path traversal sequences. We need to a payload is double encoding, my finally payload as `**%25%32%65%25%32%65%25%32%66%25%32%65%25%32%65%25%32%66%25%32%65%25%32%65%25%32%66etc/passwd**` after double decoding it returned *../../../etc/passwd*.
+First, I have payload as `/image?filename=%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passwd` but it returned *No such file* after I try to use nested traversal sequences, it still return that. Hmm, i observe the solution and realize that mechanism of filter as blocking input containing path traversal sequences and then performs a URL-decode of the input, them interspersed with each other. So my first payload after decoding firstly, it is removed by application because of blocking input containing path traversal sequences. We need to a payload is double encoding, my finally payload as `%25%32%65%25%32%65%25%32%66%25%32%65%25%32%65%25%32%66%25%32%65%25%32%65%25%32%66etc/passwd` after double decoding it returned *../../../etc/passwd*.
 
 ### Lab: File path traversal, validation of start of path
 
@@ -56,7 +56,7 @@ First, I have payload as `**/image?filename=%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passw
 
 Solution:
 
-As we can see */image?filename=/var/www/images/34.jpg* the application suppy for us a path include base folder to store images. So, we will need to go out of that and go to file *passwd*. We have payload as `**/image?filename=/var/www/images/../../../etc/passwd**`.
+As we can see */image?filename=/var/www/images/34.jpg* the application suppy for us a path include base folder to store images. So, we will need to go out of that and go to file *passwd*. We have payload as `/image?filename=/var/www/images/../../../etc/passwd`.
 
 ### Lab: File path traversal, validation of file extension with null byte bypass
 

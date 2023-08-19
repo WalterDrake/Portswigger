@@ -126,7 +126,7 @@ Check columns and data type in each column in table **v$version** with payload a
 
 Solution:
 
-As mentioned above, the database is MySQL and Microsoft, and we have experience from the above lab, so we have the payload as `'+UNION+SELECT+NULL,NULL--`. Again, I am stuck. I try trying so much as `'+UNION+SELECT+NULL,NULL,NULL--`, `'+UNION+SELECT+NULL,NULL-- ` *with the space after the double dash*, but it still fails. I realized that double dashes are blocked, but I still tried with them. Simply, it is changed from **--** to **#**. Finally, payload is `'+UNION+SELECT+@@version,+NULL#`. I still saw a solution to realize that. Fu**!!!
+As mentioned above, the database is MySQL and Microsoft, and we have experience from the above lab, so we have the payload as `'+UNION+SELECT+NULL,NULL--`. Again, I am stuck. I try trying so much as `'+UNION+SELECT+NULL,NULL,NULL--`, `'+UNION+SELECT+NULL,NULL--` *with the space after the double dash*, but it still fails. I realized that double dashes are blocked, but I still tried with them. Simply, it is changed from **--** to **#**. Finally, payload is `'+UNION+SELECT+@@version,+NULL#`. I still saw a solution to realize that. Fu**!!!
 
 ### Listing the contents of the database
 
@@ -278,3 +278,5 @@ Now, after knowing that one column is returned, we need to know about the table 
 > From my experience in the above labs, I can easily find table names that include *username* and *password*
 
 After knowing about its columns, we will extract data from them. Because only one column is returned, we have the payload as `<@html_entities>UNION SELECT username||'~'||password FROM users--<@/html_entities>`.
+
+afdfa

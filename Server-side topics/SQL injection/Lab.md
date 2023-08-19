@@ -279,4 +279,3 @@ Now, after knowing that one column is returned, we need to know about the table 
 
 After knowing about its columns, we will extract data from them. Because only one column is returned, we have the payload as `<@html_entities>UNION SELECT username||'~'||password FROM users--<@/html_entities>`.
 
-afdfa
